@@ -1,0 +1,161 @@
+Step: build-step-credential-initializer:
+
+{"level":"warn","ts":1551696818.1902905,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1551696818.191038,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-git-source-0:
+
+{"level":"warn","ts":1551696823.9782429,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1551696825.094291,"logger":"fallback-logger","caller":"git-init/main.go:92","msg":"Successfully cloned \"https://github.com/jegan-m/kube-go-lang.git\" @ \"master\" in path \"/workspace\""}
+Step: build-step-jenkins:
+
+Picked up _JAVA_OPTIONS: -Xmx400m
+Started
+Running in Durability level: PERFORMANCE_OPTIMIZED
+  12.704 [id=28]	WARNING	i.f.k.c.i.VersionUsageUtils#alert: The client is using resource type 'customresourcedefinitions' with unstable version 'v1beta1'
+[Pipeline] node
+Running on Jenkins in /tmp/jenkinsTests.tmp/jenkins6398617015105937895test/workspace/job
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withCredentials
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (CI Build and push snapshot)
+Stage "CI Build and push snapshot" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Release)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jegan-m/kube-go-lang
+[Pipeline] {
+[Pipeline] git
+Cloning the remote Git repository
+Cloning repository https://github.com/jegan-m/kube-go-lang.git
+ > git init /home/jenkins/go/src/github.com/jegan-m/kube-go-lang # timeout=10
+Fetching upstream changes from https://github.com/jegan-m/kube-go-lang.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/jegan-m/kube-go-lang.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/jegan-m/kube-go-lang.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/jegan-m/kube-go-lang.git # timeout=10
+Fetching upstream changes from https://github.com/jegan-m/kube-go-lang.git
+ > git fetch --tags --progress https://github.com/jegan-m/kube-go-lang.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 52342936f0f27b250fca20ee72540ffd6bb1c410 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 52342936f0f27b250fca20ee72540ffd6bb1c410
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master 52342936f0f27b250fca20ee72540ffd6bb1c410
+Commit message: "Draft create"
+First time build. Skipping changelog.
+[Pipeline] sh
++ jx-release-version
++ echo 0.0.1
+[Pipeline] sh
++ cat VERSION
++ jx step tag --version 0.0.1
+Tag v0.0.1 created and pushed to remote origin
+[Pipeline] sh
++ make build
+CGO_ENABLED=0 GO15VENDOREXPERIMENT=1 go build -ldflags '' -o bin/kube-go-lang main.go
+[Pipeline] sh
++ cat VERSION
++ export VERSION=0.0.1
++ skaffold build -f skaffold.yaml
+time="2019-03-04T10:58:38Z" level=warning msg="config version (skaffold/v1beta2) out of date: upgrading to latest (skaffold/v1beta3)"
+Starting build...
+Building [changeme]...
+Sending build context to Docker daemon  525.8kBSending build context to Docker daemon  6.502MB
+Step 1/4 : FROM scratch
+ ---> 
+Step 2/4 : EXPOSE 8080
+ ---> Running in 751e0fcc0215
+ ---> e879d3798d70
+Step 3/4 : ENTRYPOINT /kube-go-lang
+ ---> Running in 9d17fea49446
+ ---> 60a17e78849b
+Step 4/4 : COPY ./bin/ /
+ ---> cd7575782c35
+Successfully built cd7575782c35
+Successfully tagged 05e0958dcdcda973007de595cee05849:latest
+The push refers to a repository [335153367672.dkr.ecr.ap-southeast-2.amazonaws.com/jegan-m/kube-go-lang]
+eda6792b00ba: Preparing
+eda6792b00ba: Pushed
+0.0.1: digest: sha256:06e34caac94038dca5f4b89646bd3a7018abda525aa3eac9b81a992b16db968e size: 528
+Build complete in 2.841754082s
+Starting test...
+Test complete in 3.524µs
+changeme -> 335153367672.dkr.ecr.ap-southeast-2.amazonaws.com/jegan-m/kube-go-lang:0.0.1
+There is a new version (0.24.0) of skaffold available. Download it at https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+
+[Pipeline] sh
++ cat VERSION
++ jx step post build --image 335153367672.dkr.ecr.ap-southeast-2.amazonaws.com/jegan-m/kube-go-lang:0.0.1
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Promote to Environments)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jegan-m/kube-go-lang/charts/kube-go-lang
+[Pipeline] {
+[Pipeline] sh
++ cat ../../VERSION
++ jx step changelog --version v0.0.1
+Using batch mode as inside a pipeline
+Generating change log from git ref 52342936f0f27b250fca20ee72540ffd6bb1c410 => 60d2ee52997c42a482707bd3c7a2e219a4364035
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Finding issues in commit messages using git format
+No release found for jegan-m/kube-go-lang and tag v0.0.1 so creating a new release
+Updated the release information at https://github.com/jegan-m/kube-go-lang/releases/tag/v0.0.1
+generated: /home/jenkins/go/src/github.com/jegan-m/kube-go-lang/charts/kube-go-lang/templates/release.yaml
+Created Release kube-go-lang-0-0-1 resource in namespace jx
+Updating PipelineActivity jegan-m-kube-go-lang-master-1 with version 0.0.1
+Updated PipelineActivities jegan-m-kube-go-lang-master-1 with release notes URL: https://github.com/jegan-m/kube-go-lang/releases/tag/v0.0.1
+[Pipeline] sh
++ jx step helm release
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: jenkins-x http://chartmuseum.jenkins-x.io
+Successfully added Helm repository jenkins-x.
+Adding missing Helm repo: releases http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository releases.
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file kube-go-lang-0.0.1.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 201 response: {"saved":true}
+[Pipeline] sh
++ cat ../../VERSION
++ jx promote -b --all-auto --timeout 1h --version 0.0.1
+prow based install so skip waiting for the merge of Pull Requests to go green as currently there is an issue with gettingstatuses from the PR, see https://github.com/jenkins-x/jx/issues/2410
+Promoting app kube-go-lang version 0.0.1 to namespace jx-staging
+Created Pull Request: https://github.com/jegan-m/environment-cougarcopper-staging/pull/2
+
+Failed to query the Pull Request last commit status for https://github.com/jegan-m/environment-cougarcopper-staging/pull/2 ref b4abcbfe7a6e802dd36b3ff679242ea61834b111 Could not find a status for repository jegan-m/environment-cougarcopper-staging with ref b4abcbfe7a6e802dd36b3ff679242ea61834b111
+Failed to query the Pull Request last commit status for https://github.com/jegan-m/environment-cougarcopper-staging/pull/2 ref b4abcbfe7a6e802dd36b3ff679242ea61834b111 Could not find a status for repository jegan-m/environment-cougarcopper-staging with ref b4abcbfe7a6e802dd36b3ff679242ea61834b111
+Rebasing PullRequest due to conflict
+Created Pull Request: https://github.com/jegan-m/environment-cougarcopper-staging/pull/3
+
+Failed to query the Pull Request last commit status for https://github.com/jegan-m/environment-cougarcopper-staging/pull/3 ref 51f06905eff7b83ac7e4da3d313483fc5dc16c82 Could not find a status for repository jegan-m/environment-cougarcopper-staging with ref 51f06905eff7b83ac7e4da3d313483fc5dc16c82
+Pull Request https://github.com/jegan-m/environment-cougarcopper-staging/pull/3 is merged at sha 0c9f0f55504c1dccc95c7af424eb48827f928762
+Pull Request merged but we are not waiting for the update pipeline to complete!
+Could not find the service URL in namespace jx-staging for names kube-go-lang, jx-kube-go-lang, jx-staging-kube-go-lang
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
